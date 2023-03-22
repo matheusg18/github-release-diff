@@ -1,17 +1,12 @@
 import IApiSearchResponse from '@/typescript/interfaces/IApiSearchResponse';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
+import apiAxios from '@/modules/ApiAxios';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<IApiSearchResponse[]>) {
   const query = req.query.q;
 
-  const { data } = await axios.get('https://api.github.com/search/repositories', {
+  const { data } = await apiAxios.get('/search/repositories', {
     params: { q: query },
-    headers: {
-      Authorization: `bearer ${process.env.GITHUB_API_KEY}`,
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
   });
 
   const response = (data.items as any[]).map<IApiSearchResponse>((item) => ({
