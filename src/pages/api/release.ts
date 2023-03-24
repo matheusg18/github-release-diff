@@ -30,7 +30,7 @@ const getReleases = async (owner: string, name: string, from: string): Promise<I
     page++;
   } while (response.data.length === PAGE_SIZE && compare(releases[releases.length - 1].tagName, from, '>') && page < MAX_PAGES);
 
-  return releases.sort((a, b) => compareVersions(b.tagName, a.tagName));
+  return releases.sort((a, b) => compareVersions(a.tagName, b.tagName));
 };
 
 const buildRelease = (release: IRawRelease): IRelease => ({
