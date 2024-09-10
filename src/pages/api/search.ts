@@ -10,11 +10,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   });
 
   const response = (data.items as any[]).map<IApiSearchResponse>((item) => ({
+    id: item.id,
     htmlUrl: item.html_url,
     name: item.name,
     fullName: item.full_name,
     description: item.description,
-    owner: { login: item.owner.login },
+    owner: {
+      login: item.owner.login,
+      avatarUrl: item.owner.avatar_url,
+    },
   }));
 
   res.status(200).json(response);
